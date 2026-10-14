@@ -1,3 +1,5 @@
+#include "simp.h"
+
 /* Ridiculously trivial functions */
 
 int fn_prod(int a, int b)

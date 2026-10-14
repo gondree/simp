@@ -31,5 +31,5 @@ int main(int argc, char *argv[])
 	int fib_int_local = fibo();
         printf("fib(%i)  = %i\n", i, fib_int_local);
     }
-
+    return 0;
 }

@@ -1,27 +1,43 @@
 CC      = gcc
-CFLAGS  = -Wall
-VPATH += src
-BINS = simp
+CFLAGS  = -std=c11 -O0 -g -Wall -I.
+OBJS = simp.o fibo.o cube.o square.o sum.o
+BINS = simp simp-static
 
 .PHONY: all clean
 
 all: $(BINS)
 
-clean:
-	rm -f *.o *.s *.i $(BINS)
 
 #
 # Rules for BINS
 #
-simp: fibo.o cube.o square.o sum.o
-	$(CC) simp.c $^ -o $@
+simp: $(OBJS)
+	$(CC) $^ -o $@
+
+simp-static: $(OBJS)
+	$(CC) -static $^ -o $@
 
 #
 # Rules for Object files
 #
 
-cube.o: cube.c
-square.o: square.c
-sum.o: sum.c
-fibo.o: fibo.c
+simp.o: simp.c simp.h
+	$(CC) $(CFLAGS) -c $< -o $@
 
+cube.o: src/cube.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+square.o: src/square.c simp.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+sum.o: src/sum.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+fibo.o: src/fibo.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+#
+# Remove built files
+#
+clean:
+	rm -f *.o *.s *.i $(BINS) simp simp-static a.out
